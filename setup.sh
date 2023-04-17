@@ -42,15 +42,8 @@ export POPTORCH_LOG_LEVEL=ERR
 export RDMAV_FORK_SAFE=1
 
 
-echo "Graphcore setup - Spawning dataset preparation process"
-nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
-
-export PIP_DISABLE_PIP_VERSION_CHECK=1 CACHE_DIR=/tmp
-echo "Graphcore setup - Starting Jupyter kernel"
-jupyter lab --allow-root --ip=0.0.0.0 --no-browser --ServerApp.trust_xheaders=True \
-            --ServerApp.disable_check_xsrf=False --ServerApp.allow_remote_access=True \
-            --ServerApp.allow_origin='*' --ServerApp.allow_credentials=True
-
+# echo "Graphcore setup - Spawning dataset preparation process"
+# nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
 
 #run python setup.py
 python setup.py
@@ -59,4 +52,8 @@ pip install git+https://github.com/aniketmaurya/llama-inference-api.git@main
 #manually install lit-llama
 pip install lit-llama@git+https://github.com/Lightning-AI/lit-llama.git@main
 
-echo "thank you, please come again"
+export PIP_DISABLE_PIP_VERSION_CHECK=1 CACHE_DIR=/tmp
+echo "Graphcore setup - Starting Jupyter kernel"
+jupyter lab --allow-root --ip=0.0.0.0 --no-browser --ServerApp.trust_xheaders=True \
+            --ServerApp.disable_check_xsrf=False --ServerApp.allow_remote_access=True \
+            --ServerApp.allow_origin='*' --ServerApp.allow_credentials=True
