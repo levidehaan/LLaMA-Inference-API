@@ -1,4 +1,4 @@
-# LLaMA Inference API 🦙
+# Large Language Model (LLM) Inference API and Chatbot 🦙
 
 ![project banner](https://github.com/aniketmaurya/LLaMA-Inference-API/raw/main/assets/llama-inference-api-min.png)
 
@@ -7,12 +7,16 @@ Inference API for LLaMA
 ```
 pip install llama-inference
 
-or
+# to use chatbot
+pip install llama-inference[chatbot]
+```
 
+### Install from main branch
+```bash
 pip install git+https://github.com/aniketmaurya/llama-inference-api.git@main
 ```
 
-> **Note**: You need to manually install and setup [Lit-LLaMA](https://github.com/Lightning-AI/lit-llama) to use this project.
+> **Note**: You need to manually install [Lit-LLaMA](https://github.com/Lightning-AI/lit-llama) and setup the model weights to use this project.
 
 ```
 pip install lit-llama@git+https://github.com/Lightning-AI/lit-llama.git@main
@@ -42,7 +46,7 @@ Create a Python file `app.py` and initialize the `ServeLLaMA` App.
 
 ```python
 # app.py
-from llama_inference.serve import ServeLLaMA, Response
+from llama_inference.serve import ServeLLaMA, Response, PromptRequest
 
 import lightning as L
 
@@ -52,4 +56,19 @@ app = L.LightningApp(component)
 
 ```bash
 lightning run app app.py
+```
+
+## How to use the Chatbot
+
+```python
+from chatbot import LLaMAChatBot
+
+checkpoint_path = f"../../weights/state_dict.pth"
+tokenizer_path = f"../../weights/tokenizer.model"
+
+bot = LLaMAChatBot(
+    checkpoint_path=checkpoint_path, tokenizer_path=tokenizer_path
+)
+
+print(bot.send("hi, what is the capital of France?"))
 ```
